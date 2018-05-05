@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import Bomber from './drones/bomber'
+import TestGame from './core/TestGame'
 
 class App extends Component {
+
+  constructor () {
+    super()
+    this.mainLoopStarted = false
+    this.tPrevFrame = undefined
+    this.animate = this.animate.bind(this)
+    this.testGame = new TestGame(this)
+  }
 
   componentDidMount () {
     this.camera = new window.THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100 )
@@ -97,6 +107,7 @@ class App extends Component {
 
 
 
+    this.testGame.init()
 
 
 
@@ -105,7 +116,14 @@ class App extends Component {
     window.requestAnimationFrame(this.animate)
   }
 
-  animate = () => {
+  animate (tFrame) {
+
+    if (!this.mainLoopStarted) {
+      this.mainLoopStarted = true
+      this.tPrevFrame = tFrame
+      window.requestAnimationFrame(this.animate)
+      return
+    }
  
     this.mesh.rotation.x += 0.01
     this.mesh.rotation.y += 0.02
