@@ -37,6 +37,8 @@ export default class EnergyBolt {
   collide (target, pos) {
     if (target.type !== 'player') {
       console.log('drone hit')
+    } else {
+      console.log('player hit')
     }
     pos.sub(target.clone.position)
     target.move.x += pos.x * -0.025

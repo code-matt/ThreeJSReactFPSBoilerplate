@@ -18,7 +18,6 @@ export default class Player {
 
     this.getPosition = this.getPosition.bind(this)
     this.damage = this.damage.bind(this)
-    this.heal = this.heal.bind(this)
 
     this.ammoCount = 30
     this.health = 100
@@ -152,38 +151,8 @@ export default class Player {
   }
 
   damage (amount) {
-    if (this.statusEffects.shield) {
-      console.log('shield hit')
-      this.statusEffects.shield.generator.damage(amount * 3)
-      this.world.flashShield()
-    } else {
-      console.log('owies')
-      this.world.setState({
-        health: _.clamp(this.state.health - amount, 0, 100)
-      })
-
-      this.world.doFlash()
-
-
-      if (this.state.health - amount <= 0) {
-        if (this.world.watchTower.state.tutorial) {
-          this.world.watchTower.setState({
-            health: 100
-          })
-          this.health = 100
-          return
-        } else {
-          this.world.enqueEvent('GameOver', 0, {})
-        }
-      }
-    }
+    this.health = _.clamp(this.health - amount, 0, 100)
     this.healthElement.innerText = `Health ${this.health}`
-  }
-
-  heal (amount) {
-    this.world.setState({
-      health: _.clamp(this.state.health + amount, 0, 100)
-    })
   }
 
   update (dtSeconds) {

@@ -36,11 +36,13 @@ export default class Eva {
   }
 
   destroySelf () {
-    this.world.removeEnemy(this)
+    if (!this.deinit)
+      this.deinit = true
+      this.world.removeEnemy(this)
   }
  
   shoot () {
-
+  
   }
 
   damage (amount) {
@@ -52,6 +54,6 @@ export default class Eva {
 
   update (dtSeconds) {
     this.clone.rotation.y += 0.25 * dtSeconds
-    // this.clone.lookAt(this.state.target.position)
+    this.clone.lookAt(this.state.target.position)
   }
 }

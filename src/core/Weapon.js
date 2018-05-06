@@ -112,34 +112,16 @@ export default class Launcher {
   }
 
   shoot = () => {
-    // const player = this.world.player
-    // var pos = new V3(-0.02, -0.08, -0.17)
-    // pos.applyMatrix4(player.mtxWorld)
-
-    // this.world.addObject('EnergyBolt', {
-    //   initialPosition: pos,
-    //   initialRotation: player.rotation,
-    //   shooter: player,
-    //   lifetime: 1.6
-    // })
-
     const player = this.world.player
     var pos = new V3(-0.02, -0.08, -0.17)
     pos.applyMatrix4(player.mtxWorld)
 
     new SmartObject('EnergyBolt', this.world, {
       initialPosition: pos,
-      initialRotation: player.rotation
+      initialRotation: player.rotation,
+      shooter: player
     })
     this.fire()
-
-    // if (!this.world.watchTower.state.tutorial) {
-    //   --this.ammoCount
-    // }
-    // this.world.soundManager.playSound('game1', 'rocket')
-    // this.world.watchTower.setState({
-    //   forceUpdate: this.world.watchTower.state.forceUpdate + 1
-    // })
   }
 }
 

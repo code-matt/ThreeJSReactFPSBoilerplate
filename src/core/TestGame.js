@@ -16,6 +16,7 @@ export default class TestGame {
     this.update = this.update.bind(this)
     this.removeProjectile = this.removeProjectile.bind(this)
     this.player = new Player(this, app.camera)
+    this.enemies.push(this.player)
     this.weapon = new Launcher(this)
     this.EnergyBolt = new EnergyBolt(this)
     this.EnergyBolt.createClonable()
@@ -28,7 +29,7 @@ export default class TestGame {
       this.bomber.createClonable()
       .then(done => {
         let bomber = new SmartObject('bomber', this, {
-          initialPosition: new window.THREE.Vector3(0, 1, 0),
+          initialPosition: new window.THREE.Vector3(0, 1.4, 0),
           target: this.player
         })
         this.assault = new Assault(this)
@@ -66,13 +67,17 @@ export default class TestGame {
   removeEnemy (enemy) {
     let idx = this.enemies.indexOf(enemy)
     this.app.scene.remove(enemy.clone)
-    this.enemies.splice(enemy, 1)
+    let enemyy = this.enemies.splice(idx, 1)
   }
 
   update (dtSeconds, tFrame) {
     TWEEN.update(tFrame)
     this.player.update()
-    this.enemies.forEach(e => e.update(dtSeconds))
+    this.enemies.forEach(e => {
+      if (e.type !== 'player') {
+        e.update(dtSeconds)
+      }
+    })
     this.projectiles.forEach(p => p.update(dtSeconds))
   }
 }

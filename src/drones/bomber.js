@@ -1,3 +1,4 @@
+import SmartObject from '../core/SmartObject'
 export default class Bomber {
   constructor (world) {
     this.world = world
@@ -32,6 +33,11 @@ export default class Bomber {
     this.world.enemies.push(this)
     this.move = new window.THREE.Vector3()
     this.health = 100
+
+    //obviously remove this
+    setInterval(() => {
+      this.shoot()
+    }, 2000)
   }
 
   destroySelf () {
@@ -39,7 +45,11 @@ export default class Bomber {
   }
  
   shoot () {
-
+    new SmartObject('EnergyBolt', this.world, {
+      initialPosition: this.clone.position.clone(),
+      initialRotation: this.clone.rotation,
+      shooter: this
+    })
   }
 
   damage (amount) {
@@ -50,7 +60,7 @@ export default class Bomber {
   }
 
   update (dtSeconds) {
-    this.clone.rotation.y += 0.25 * dtSeconds
-    // this.clone.lookAt(this.state.target.position)
+    // this.clone.rotation.y += 0.25 * dtSeconds
+    this.clone.lookAt(this.state.target.position)
   }
 }
