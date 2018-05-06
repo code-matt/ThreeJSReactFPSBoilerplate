@@ -45,7 +45,7 @@ export default class Bomber {
   }
 
   update (dtSeconds) {
-    this.clone.rotation.x += 0.25 * dtSeconds
+    this.clone.rotation.y += 0.25 * dtSeconds
     // this.clone.lookAt(this.state.target.position)
   }
 }

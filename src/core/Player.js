@@ -58,10 +58,10 @@ export default class Player {
     }
     setTimeout(() => {
       if (this.activeWeapon) {
-        this.world.cameraWrapper.weaponMount.remove(this.activeWeapon.clone)
+        this.camera.weaponMount.remove(this.activeWeapon.clone)
       }
       this.activeWeapon = nextWeapon
-      this.world.cameraWrapper.weaponMount.add(this.activeWeapon.clone)
+      this.camera.weaponMount.add(this.activeWeapon.clone)
       this.activeWeapon.activate()
     }, this.activeWeapon ? 375 : 0)
   }

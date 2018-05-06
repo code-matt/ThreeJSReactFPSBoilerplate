@@ -15,6 +15,8 @@ class App extends Component {
 
   componentDidMount () {
     this.camera = new window.THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100 )
+    this.camera.weaponMount = new window.THREE.Group()
+    this.camera.add(this.camera.weaponMount)
     this.testGame = new TestGame(this, this.camera)
     this.camera.position.z = 1
     this.scene = new window.THREE.Scene()
@@ -127,7 +129,7 @@ class App extends Component {
     // ******************************************************************
 
 
-    this.testGame.update(delta)
+    this.testGame.update(delta, tFrame)
  
     this.renderer.render( this.scene, this.camera )
     window.requestAnimationFrame( this.animate )
