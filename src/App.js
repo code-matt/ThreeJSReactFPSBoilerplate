@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import Bomber from './drones/bomber'
 import TestGame from './core/TestGame'
 
 class App extends Component {

@@ -1,3 +1,4 @@
+import SmartObject from './SmartObject'
 var TWEEN = require('@tweenjs/tween.js')
 
 const V3 = window.THREE.Vector3
@@ -72,7 +73,7 @@ export default class Launcher {
       }
     })
 
-    var target2 = new window.THREE.Vector3(0.02, -0.1, -0.025)
+    var target2 = new window.THREE.Vector3(0.02, -0.1, 0)
     window.animateVector3(this.clone.position, target2, {
       duration: 375,
       easing: TWEEN.Easing.Quadratic.InOut,
@@ -85,7 +86,7 @@ export default class Launcher {
 
   fire = () => {
     const _this = this
-    var target2 = new window.THREE.Vector3(0.02, -0.05, -0.050)
+    var target2 = new window.THREE.Vector3(0.02, -0.05, -0.005)
     window.animateVector3(this.clone.position, target2, {
       duration: 100,
       easing: TWEEN.Easing.Quadratic.InOut,
@@ -100,7 +101,7 @@ export default class Launcher {
 
   fireCycle2 = () => {
     const _this = this
-    var target2 = new window.THREE.Vector3(0.02, -0.05, -0.065)
+    var target2 = new window.THREE.Vector3(0.02, -0.05, -0.015)
     window.animateVector3(this.clone.position, target2, {
       duration: 200,
       easing: TWEEN.Easing.Quadratic.InOut,
@@ -121,7 +122,16 @@ export default class Launcher {
     //   shooter: player,
     //   lifetime: 1.6
     // })
-    // this.fire()
+
+    const player = this.world.player
+    var pos = new V3(-0.02, -0.08, -0.17)
+    pos.applyMatrix4(player.mtxWorld)
+
+    new SmartObject('EnergyBolt', this.world, {
+      initialPosition: pos,
+      initialRotation: player.rotation
+    })
+    this.fire()
 
     // if (!this.world.watchTower.state.tutorial) {
     //   --this.ammoCount

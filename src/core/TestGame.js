@@ -4,6 +4,7 @@ import Bomber from '../drones/bomber'
 import Assault from '../drones/assault'
 import Eva from '../drones/eva'
 import Launcher from './Weapon'
+import EnergyBolt from '../projectiles/EnergyBolt'
 
 var TWEEN = require('@tweenjs/tween.js')
 
@@ -11,9 +12,13 @@ export default class TestGame {
   constructor (app) {
     this.app = app
     this.enemies = []
+    this.projectiles = []
     this.update = this.update.bind(this)
+    this.removeProjectile = this.removeProjectile.bind(this)
     this.player = new Player(this, app.camera)
     this.weapon = new Launcher(this)
+    this.EnergyBolt = new EnergyBolt(this)
+    this.EnergyBolt.createClonable()
   }
 
   init = () => {
@@ -41,15 +46,33 @@ export default class TestGame {
               target: this.player
             })
             this.player.activateWeapon(0)
+            document.addEventListener('click', () => {
+              if (this.app.controls.enabled) {
+                this.player.shoot()
+              }
+            })
           })
         })
       })
     })
   }
 
+  removeProjectile (projectile) {
+    let idx = this.projectiles.indexOf(projectile)
+    this.app.scene.remove(projectile.clone)
+    this.projectiles.splice(projectile, 1)
+  }
+
+  removeEnemy (enemy) {
+    let idx = this.enemies.indexOf(enemy)
+    this.app.scene.remove(enemy.clone)
+    this.enemies.splice(enemy, 1)
+  }
+
   update (dtSeconds, tFrame) {
     TWEEN.update(tFrame)
     this.player.update()
     this.enemies.forEach(e => e.update(dtSeconds))
+    this.projectiles.forEach(p => p.update(dtSeconds))
   }
 }

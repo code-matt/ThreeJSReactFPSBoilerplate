@@ -31,6 +31,13 @@ export default class Player {
 
     this.weapons = []
     this.activeWeapon = null
+
+
+    this.healthElement = document.createElement('div')
+    this.healthElement.style.color = 'white'
+    this.healthElement.style.position = 'absolute'
+    this.healthElement.innerText = `Health ${this.health}`
+    document.body.appendChild(this.healthElement)
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -170,6 +177,7 @@ export default class Player {
         }
       }
     }
+    this.healthElement.innerText = `Health ${this.health}`
   }
 
   heal (amount) {

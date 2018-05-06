@@ -31,18 +31,23 @@ export default class Eva {
     this.clone.position.copy(this.state.initialPosition)
     this.world.app.scene.add(this.clone)
     this.world.enemies.push(this)
+    this.move = new window.THREE.Vector3()
+    this.health = 100
   }
 
   destroySelf () {
-
+    this.world.removeEnemy(this)
   }
  
   shoot () {
 
   }
 
-  damage () {
-
+  damage (amount) {
+    this.health -= amount
+    if (this.health <= 0) {
+      this.destroySelf()
+    }
   }
 
   update (dtSeconds) {
