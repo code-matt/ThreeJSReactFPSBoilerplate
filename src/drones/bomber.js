@@ -6,35 +6,36 @@ export default class Bomber {
     this.texLoader = new window.THREE.TextureLoader()
     this.functions2bind = {
       shoot: this.shoot,
-      damage: this.damage,
-      deallocate: this.deallocate,
-      onAllocate: this.onAllocate
+      damage: this.damage
     }
   }
 
   createClonable () {
-    let texDiffuse = this.texLoader.load('assets/Diffuse.png')
+    return new Promise((resolve, reject) => {
+      let texDiffuse = this.texLoader.load('assets/Diffuse.png')
 
-    this.loader.load('assets/bomber.obj', (data) => {
-      let bomberMaterial = new window.THREE.MeshPhongMaterial({
-        map: texDiffuse
+      this.loader.load('assets/bomber.obj', (data) => {
+        let bomberMaterial = new window.THREE.MeshPhongMaterial({
+          map: texDiffuse
+        })
+        data.children[0].material = bomberMaterial
+        this.clonable = data
+        resolve(true)
       })
-      data.children[0].material = bomberMaterial
-      this.clonable = data
-      data.position.y = 1.4
-      data.position.z = 2
-      this.world.scene.add(this.clonable)
     })
   }
 
-  onAllocate () {
-
+  onCreate (initialState) {
+    this.state = initialState
+    this.clone.position.copy(this.state.initialPosition)
+    this.world.app.scene.add(this.clone)
+    this.world.enemies.push(this)
   }
 
-  deallocate () {
+  destroySelf () {
 
   }
-
+ 
   shoot () {
 
   }
@@ -43,7 +44,8 @@ export default class Bomber {
 
   }
 
-  update () {
-
+  update (dtSeconds) {
+    this.clone.rotation.x += 0.25 * dtSeconds
+    // this.clone.lookAt(this.state.target.position)
   }
 }
