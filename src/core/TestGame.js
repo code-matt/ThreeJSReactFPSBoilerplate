@@ -59,7 +59,6 @@ export default class TestGame {
   }
 
   removeProjectile (projectile) {
-    let idx = this.projectiles.indexOf(projectile)
     this.app.scene.remove(projectile.clone)
     this.projectiles.splice(projectile, 1)
   }
@@ -67,7 +66,7 @@ export default class TestGame {
   removeEnemy (enemy) {
     let idx = this.enemies.indexOf(enemy)
     this.app.scene.remove(enemy.clone)
-    let enemyy = this.enemies.splice(idx, 1)
+    this.enemies.splice(idx, 1)
   }
 
   update (dtSeconds, tFrame) {

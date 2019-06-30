@@ -43,9 +43,6 @@ export default class Launcher {
         _this.clone.rotation.x = d.x
       },
       callback: () => {
-        // _this.world.watchTower.setState({
-        //   forceUpdate: _this.world.watchTower.state.forceUpdate + 1
-        // })
         _this.active = true
       }
     })
